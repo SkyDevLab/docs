@@ -49,6 +49,9 @@ This option concerns whether an open brace `{` should be placed on the same line
 |                          | `accessors`, `anonymous_methods`, `anonymous_types`, `control_blocks`, `events`, `indexers`,</br>`lambdas`, `local_functions`, `methods`, `object_collection_array_initializers`, `properties`, `types` | Require braces to be on a new line for the specified code element ("Allman" style). |
 | **Default option value** | `all`                             |              |
 
+> [!NOTE]
+> The `object_collection_array_initializers` value also controls open brace placement for property patterns in pattern matching expressions.
+
 Code examples:
 
 ```csharp
@@ -67,6 +70,17 @@ void MyMethod() {
         ...
     }
 }
+
+// csharp_new_line_before_open_brace = object_collection_array_initializers
+var person = new Person
+{
+    Name = "John"
+};
+
+var isAdult = person is
+{
+    Age: >= 18
+};
 ```
 
 ### csharp_new_line_before_else
