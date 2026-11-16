@@ -84,18 +84,18 @@ The assembly file version is used to display a file version in Windows and has n
 
 ### Assembly informational version
 
-The assembly informational version is used to record additional version information and has no effect on runtime behavior. Setting this version is optional. If you're using Source Link, this version will be set on build with the NuGet package version plus a source control version. For example, `1.0.0-beta1+204ff0a` includes the commit hash of the source code the assembly was built from. For more information, see [Source Link](./sourcelink.md).
+The assembly informational version is used to record additional version information and has no effect on runtime behavior. In SDK-style projects, `InformationalVersion` defaults to the value of `$(Version)`. When using Source Link (or the .NET SDK's built-in source revision support), the source control commit hash is automatically appended to this version on build. For example, `1.0.0-beta1+204ff0a` includes the commit hash of the source code the assembly was built from. For more information, see [Source Link](./sourcelink.md) and [MSBuild project properties](../../core/project-sdk/msbuild-props.md#generateassemblyinfo).
 
 ```xml
 <InformationalVersion>The quick brown fox jumped over the lazy dog.</InformationalVersion>
 ```
 
 > [!NOTE]
-> Older versions of Visual Studio raise a build warning if this version doesn't follow the format `Major.Minor.Build.Revision`. The warning can be safely ignored.
+> If you set `<PackageVersion>` without setting `<Version>`, `InformationalVersion` defaults to `$(Version)` (which is `1.0.0` by default). Prefer setting `<Version>` (which sets both `PackageVersion` and `InformationalVersion`), or set `<InformationalVersion>` to match your package version so the appended commit metadata reflects your actual release version.
 
-❌ AVOID setting the assembly informational version yourself.
+❌ AVOID manually appending source control metadata to the assembly informational version yourself.
 
-> Allow SourceLink to automatically generate the version containing NuGet and source control metadata.
+> Allow Source Link or the .NET SDK to automatically append the source control metadata to the version.
 
 >[!div class="step-by-step"]
 >[Previous](publish-nuget-package.md)
