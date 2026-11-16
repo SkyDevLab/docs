@@ -14,7 +14,7 @@ In [classification](#classification), accuracy is the number of correctly classi
 
 ## Area under the curve (AUC)
 
-In [binary classification](#binary-classification), an evaluation metric that is the value of the area under the curve that plots the true positives rate (on the y-axis) against the false positives rate (on the x-axis). Ranges from 0.5 (worst) to 1 (best). Also known as the area under the ROC curve, i.e., receiver operating characteristic curve. For more information, see the [Receiver operating characteristic](https://en.wikipedia.org/wiki/Receiver_operating_characteristic) article on Wikipedia.
+In [binary classification](#binary-classification), an evaluation metric that is the value of the area under the curve that plots the true positive rate (on the y-axis) against the false positive rate (on the x-axis). Ranges from 0 to 1, where 1 indicates perfect classification and 0.5 indicates performance no better than random guessing. Also known as the area under the ROC curve (receiver operating characteristic curve). For more information, see the [Receiver operating characteristic](https://en.wikipedia.org/wiki/Receiver_operating_characteristic) article on Wikipedia and [Evaluation metrics for Binary Classification](metrics.md#evaluation-metrics-for-binary-classification).
 
 ## Binary classification
 
@@ -36,7 +36,7 @@ When the data is used to predict a category, [supervised machine learning](#supe
 
 ## Coefficient of determination
 
-In [regression](#regression), an evaluation metric that indicates how well data fits a model. Ranges from 0 to 1. A value of 0 means that the data is random or otherwise cannot be fit to the model. A value of 1 means that the model exactly matches the data. This is often referred to as r<sup>2</sup>, R<sup>2</sup>, or r-squared.
+In [regression](#regression), an evaluation metric that indicates how well data fits a model. Commonly denoted as r<sup>2</sup>, R<sup>2</sup>, or R-squared, it ranges up to 1 (which indicates a perfect fit). A score of 0 indicates that the model predicts as well as the mean of the training labels, and scores can be negative when model predictions perform worse than the mean baseline. For more information, see [Evaluation metrics for Regression](metrics.md#evaluation-metrics-for-regression).
 
 ## Data
 
@@ -106,7 +106,7 @@ A feature extraction scheme for text data: any sequence of N words turns into a 
 
 ## Normalization
 
-Normalization is the process of scaling floating point data to values between 0 and 1. Many of the training algorithms used in ML.NET require input feature data to be normalized. ML.NET provides a series of [transforms for normalization](transforms.md#normalization-and-scaling).
+Normalization is the process of scaling or centering numeric feature data into a common range or standard distribution (for example, values between 0 and 1, or zero mean with unit variance). Many training algorithms used in ML.NET perform best or require input feature data to be normalized. ML.NET provides a series of [transforms for normalization](transforms.md#normalization-and-scaling).
 
 ## Numerical feature vector
 
