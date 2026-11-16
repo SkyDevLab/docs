@@ -83,6 +83,23 @@ NuGet packages with a version suffix are considered [prerelease](/nuget/create-p
 
 ✔️ DO publish a stable package when it's ready so other stable packages can reference it.
 
+## Documentation comments
+
+XML documentation comments describe your library's APIs and provide IntelliSense and tooltips in developers' code editors. Setting `<GenerateDocumentationFile>true</GenerateDocumentationFile>` in your project file causes the .NET SDK to generate an XML documentation file and automatically package it alongside your assemblies in the NuGet package (`*.nupkg`).
+
+```xml
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <!-- Generate XML documentation file and package it in the .nupkg -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+</Project>
+```
+
+Enabling `<GenerateDocumentationFile>` also prompts the compiler to validate documentation comments and surface warnings (such as CS1591) for undocumented or malformed public APIs, helping maintain complete and accurate documentation for your consumers.
+
+✔️ DO enable `<GenerateDocumentationFile>` in library projects to include XML documentation comments in the NuGet package.
+
 ## Symbol packages
 
 Symbol files (`*.pdb`) are produced by the .NET compiler alongside assemblies. Symbol files map execution locations to the original source code so you can step through source code as it is running using a debugger. NuGet supports [generating a separate symbol package (`*.snupkg`)](/nuget/create-packages/symbol-packages-snupkg) containing symbol files alongside the main package containing .NET assemblies. The idea of symbol packages is they're hosted on a symbol server and are only downloaded by a tool like Visual Studio on demand.
