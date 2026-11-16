@@ -504,7 +504,7 @@ If you are developing an app rather than a library (that is, if you aren't expos
 
 Language independence has a few possible meanings. One meaning involves seamlessly consuming types written in one language from an app written in another language. A second meaning, which is the focus of this article, involves combining code written in multiple languages into a single .NET assembly.
 
-The following example illustrates cross-language interoperability by creating a class library named Utilities.dll that includes two classes, `NumericLib` and `StringLib`. The `NumericLib` class is written in C#, and the `StringLib` class is written in Visual Basic. Here's the source code for `StringUtil.vb`, which includes a single member, `ToTitleCase`, in its `StringLib` class.
+The following example illustrates cross-language interoperability by creating a class library named UtilityLib.dll that includes two classes, `NumericLib` and `StringLib`. The `NumericLib` class is written in C#, and the `StringLib` class is written in Visual Basic. Here's the source code for `StringUtil.vb`, which includes a single member, `ToTitleCase`, in its `StringLib` class.
 
 [!code-vb[Conceptual.CrossLanguage#1](../../samples/snippets/visualbasic/VS_Snippets_CLR/conceptual.crosslanguage/vb/stringutil.vb#1)]
 
@@ -526,10 +526,13 @@ To compile the C# source code file into a module, use this command:
 csc /t:module NumberUtil.cs
 ```
 
-You then use the [Linker options](/cpp/build/reference/linker-options) to compile the two modules into an assembly:
+> [!NOTE]
+> Multifile assemblies created from `.netmodule` files are supported by .NET Framework only.
+
+You then use the [Assembly Linker (Al.exe)](../framework/tools/al-exe-assembly-linker.md) to combine the two modules into an assembly:
 
 ```console
-link numberutil.netmodule stringutil.netmodule /out:UtilityLib.dll /dll
+al NumberUtil.netmodule StringUtil.netmodule /out:UtilityLib.dll /target:lib
 ```
 
 The following example then calls the `NumericLib.NearZero` and `StringLib.ToTitleCase` methods. Both the Visual Basic code and the C# code are able to access the methods in both classes.
