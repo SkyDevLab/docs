@@ -213,11 +213,9 @@ This section lists the available configuration options for code analyzers. For m
 
 ### unsafe_DllImportSearchPath_bits
 
-<!-- markdownlint-disable MD056 -->
 | Description | Allowable values | Default value | Configurable rules |
 |-------------|------------------|---------------|--------------------|
-| Configure which value of `DllImportSearchPath` is unsafe for the analysis | Integer values of `System.Runtime.InteropServices.DllImportSearchPath` | `770` (that is, `AssemblyDirectory | UseDllDirectoryForDependencies | ApplicationDirectory`) | [CA5393](quality-rules/ca5393.md) |
-<!-- markdownlint-enable MD056 -->
+| Configure which value of `DllImportSearchPath` is unsafe for the analysis | Integer values of `System.Runtime.InteropServices.DllImportSearchPath` | `770` (that is, `AssemblyDirectory \| UseDllDirectoryForDependencies \| ApplicationDirectory`) | [CA5393](quality-rules/ca5393.md) |
 
 ### exclude_aspnet_core_mvc_controllerbase
 
