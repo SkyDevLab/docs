@@ -6,8 +6,8 @@ string dateString = "7/16/2008 8:32:45.126 AM";
 
 try
 {
-    DateTime dateValue = DateTime.Parse(dateString);
-    DateTimeOffset dateOffsetValue = DateTimeOffset.Parse(dateString);
+    DateTime dateValue = DateTime.Parse(dateString, CultureInfo.InvariantCulture);
+    DateTimeOffset dateOffsetValue = DateTimeOffset.Parse(dateString, CultureInfo.InvariantCulture);
 
     // Display Millisecond component alone.
     Console.WriteLine($"Millisecond component only: {dateValue.ToString("fff")}");
@@ -23,7 +23,8 @@ try
     string millisecondFormat = $"{NumberFormatInfo.CurrentInfo.NumberDecimalSeparator}fff";
 
     // Append millisecond pattern to current culture's full date time pattern.
-    fullPattern = Regex.Replace(fullPattern, "(:ss|:s)", $"$1{millisecondFormat}");
+    // Uses a regular expression to match unquoted seconds format specifiers (s or ss) across all cultures.
+    fullPattern = Regex.Replace(fullPattern, @"(?<!\w)(s{1,2})(?!\w)(?=(?:[^']*'[^']*')*[^']*$)", $"$1{millisecondFormat}");
 
     // Display Millisecond component with modified full date and time pattern.
     Console.WriteLine($"Modified full date time pattern: {dateValue.ToString(fullPattern)}");
