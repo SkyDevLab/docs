@@ -30,6 +30,7 @@ Most data types have a common representation in both managed and unmanaged memor
 
 The following complex types are also blittable types:
 
+- Enumeration types whose underlying type is a blittable integral type (for example, an enum based on `int`, `short`, or `byte`).
 - One-dimensional arrays of blittable primitive types, such as an array of integers. However, a type that contains a variable array of blittable types is not itself blittable.
 - Formatted value types that contain only blittable types (and classes if they're marshalled as formatted types). For more information about formatted value types, see [Default marshalling for value types](default-marshalling-behavior.md#default-marshalling-for-value-types).
 
