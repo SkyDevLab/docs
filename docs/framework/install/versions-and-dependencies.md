@@ -53,12 +53,17 @@ Jump to:
 ### .NET Framework 4.8.1
 
 - [New features](../whats-new/index.md#whats-new-in-net-framework-481)
+- [Native support for Arm64](../whats-new/index.md#arm64native481)
 - New accessibility features
 - [Release notes](https://github.com/Microsoft/dotnet/tree/main/releases/net481/README.md)
+
+> [!NOTE]
+> .NET Framework 4.8.1 introduces native Arm64 support on Windows 11, allowing workloads to run without emulation overhead. Prior versions of .NET Framework run on Arm64 devices using x86 or x64 emulation. For more information, see [Native support for Arm64](../whats-new/index.md#arm64native481) and [.NET Framework system requirements](../get-started/system-requirements.md).
 
 |                    | Versions              |
 |--------------------|-----------------------|
 | **CLR**            | 4                     |
+| **Architectures**  | x86, x64, Arm64 (native on Windows 11) |
 | **Windows**        | ✔️ 11 September 2025 Release (Version 26200)<br/>✔️ 11 October 2024 Release (Version 26100)<br/>✔️ 11 October 2023 Release (Version 22631)<br/>✔️ 11 September 2022 Release (Version 22621)<br/>➕ 11 October 2021 Release (Version 22000)<br/>➕ 10 October 2022 Update (Version 22H2)<br/>➕ 10 November 2021 Update (Version 21H2)<br/>➕ 10 May 2021 Update (Version 21H1)<br/>➕ 10 October 2020 Update (Version 20H2)<br/>|
 | **Windows Server** | ✔️ Windows Server 2025<br/>➕ Windows Server 2022 |
 
