@@ -60,7 +60,7 @@ The first step is to create the library.
 9. Add the `[ComVisible(true)]` attribute to both the interface and the class.
 
 > [!IMPORTANT]
-> Unlike in .NET Framework, .NET Core requires you to specify the CLSID of any class you want to be activatable via COM.
+> In .NET Framework, a class marked `[ComVisible(true)]` without an explicit `[Guid]` attribute has a CLSID generated automatically for activation. In .NET Core and .NET 5+, exposing a class for activation through the generated COM host requires both `[ComVisible(true)]` and an explicit `[Guid]` attribute. The COM host generator does not auto-generate CLSIDs for activation. (Automatic GUID generation only applies when passing managed types through the COM marshaling layer.)
 
 ## Generate the COM host
 
