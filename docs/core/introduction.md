@@ -29,7 +29,7 @@ The .NET platform is designed to deliver productivity, performance, security, an
 
 .NET includes the following components:
 
-- Runtime — executes application code.
+- Runtime — executes application code. For guidance on selecting the appropriate runtime (base runtime, ASP.NET Core runtime, or Desktop runtime) versus the SDK on Windows, see [Choose the correct runtime](install/windows.md#choose-the-correct-runtime).
 - Libraries — provide utility functionality like [JSON parsing](../standard/serialization/system-text-json/overview.md).
 - Compiler — compiles C# (and other languages) source code into (runtime) executable code.
 - SDK and other tools — enable building and monitoring apps with modern workflows.

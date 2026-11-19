@@ -53,6 +53,8 @@ items:
         items:
           - name: About .NET
             items:
+              - name: Overview
+                href: ../../core/introduction.md
               - name: Versioning info for .NET SDK, MSBuild, and Visual Studio
                 href: ../../core/porting/versioning-sdk-msbuild-vs.md
               - name: Choose between .NET and .NET Framework for server apps
