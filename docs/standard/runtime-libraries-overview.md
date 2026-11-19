@@ -42,6 +42,7 @@ The following table shows some examples of package-provided libraries.
 ## See also
 
 * [Introduction to .NET](../core/introduction.md)
+* [.NET runtime libraries source repository](https://github.com/dotnet/runtime/tree/main/src/libraries)
 * [Install .NET SDK or runtime](../core/install/index.yml)
 * [Select the installed .NET SDK or runtime version to use](../core/versions/selection.md)
 * [Publish framework-dependent apps](../core/deploying/index.md#publish-as-framework-dependent)

@@ -69,8 +69,19 @@ There are many app models that can be used with .NET, for example:
 - [.NET MAUI](https://dotnet.microsoft.com/apps/maui) - An app platform for building native apps that run on Windows, macOS, iOS, and Android using C#.
 - [Windows Desktop](https://www.nuget.org/packages/Microsoft.WindowsDesktop.App.Ref/) - Includes Windows Presentation Foundation (WPF) and Windows Forms.
 
+## Source code and API discovery
+
+To discover and explore the APIs available in the core libraries:
+
+- Browse the [.NET API browser](../../api/index.md) to inspect documented namespaces, classes, interfaces, and members across .NET versions.
+- Explore the [.NET runtime library source repository](https://github.com/dotnet/runtime/tree/main/src/libraries) on GitHub for the source code inventory of the base class libraries (BCL) and core runtime components.
+
+> [!NOTE]
+> Namespaces, assemblies, source directories, and NuGet packages are distinct concepts and do not correspond one-to-one. A single namespace can span multiple assemblies, and some source directories under `src/libraries` compile directly into the shared runtime framework (such as `Microsoft.NETCore.App`), while others are distributed as standalone NuGet packages or platform-specific extensions.
+
 ## See also
 
 - [Runtime libraries overview](runtime-libraries-overview.md)
 - [Common type system](base-types/common-type-system.md)
 - [.NET API browser](../../api/index.md)
+- [.NET runtime libraries source (`dotnet/runtime`)](https://github.com/dotnet/runtime/tree/main/src/libraries)
