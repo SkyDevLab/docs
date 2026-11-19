@@ -46,8 +46,11 @@ This option concerns whether an open brace `{` should be placed on the same line
 | **Introduced version**   | Visual Studio 2017                |             |
 | **Option values**        | `all`                             | Require braces to be on a new line for all expressions ("Allman" style). |
 |                          | `none`                            | Require braces to be on the same line for all expressions ("K&R"). |
-|                          | `accessors`, `anonymous_methods`, `anonymous_types`, `control_blocks`, `events`, `indexers`,</br>`lambdas`, `local_functions`, `methods`, `object_collection_array_initializers`, `properties`, `types` | Require braces to be on a new line for the specified code element ("Allman" style). |
+|                          | `accessors`, `anonymous_methods`, `anonymous_types`, `control_blocks`, `events`, `indexers`,</br>`lambdas`, `local_functions`, `methods`, `object_collection_array_initializers`, `properties`, `types` | Require braces to be on a new line for the specified code element ("Allman" style). Note: `object_collection_array_initializers` also applies to multiline property pattern clauses. |
 | **Default option value** | `all`                             |              |
+
+> [!NOTE]
+> The `object_collection_array_initializers` value controls open brace placement for object, collection, and array initializers, as well as multiline property pattern clauses. Single-line property patterns (such as `item is { Age: >= 18 }`) are preserved on a single line.
 
 Code examples:
 
@@ -67,6 +70,26 @@ void MyMethod() {
         ...
     }
 }
+
+// csharp_new_line_before_open_brace = object_collection_array_initializers
+var person = new Person
+{
+    Name = "Alice"
+};
+
+if (item is
+    {
+        Age: >= 18
+    })
+
+// csharp_new_line_before_open_brace = none (or omitting object_collection_array_initializers)
+var person = new Person {
+    Name = "Alice"
+};
+
+if (item is {
+        Age: >= 18
+    })
 ```
 
 ### csharp_new_line_before_else
