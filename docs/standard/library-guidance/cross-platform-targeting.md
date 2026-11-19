@@ -130,6 +130,23 @@ public static class GpsLocation
 
 ❌ AVOID changing the assembly name or using different assembly names for each TFM your library compiles. Due to dependencies between libraries, multi-targeting with different assembly names per TFM can break package consumers. An assembly should have the same name across all TFMs.
 
+## Consuming older-target libraries from newer applications
+
+Developers often ask whether an application targeting a newer version of .NET (such as `net10.0` or `net11.0`) can reference a library or NuGet package that targets an older version of .NET (such as `net8.0`, `net6.0`, or `netcoreapp3.1`).
+
+**Yes, this is fully supported through .NET backward compatibility.**
+
+When a newer application references a package that targets an older .NET version:
+
+- **NuGet asset selection**: NuGet selects the closest compatible target framework asset from the package. An application targeting `net10.0` or `net11.0` can consume library assets built for `net10.0`, `net9.0`, `net8.0`, `net7.0`, `net6.0`, `net5.0`, `netcoreapp3.1`, or compatible `netstandard` versions. For details on asset selection rules, see [Target frameworks in SDK-style projects](../frameworks.md).
+- **Single runtime**: The referenced library executes directly within the consuming application's modern runtime process. The library's target framework is a compile-time API contract; it is not an instruction to load or launch a separate, older runtime.
+- **Runtime roll-forward vs. package compatibility**: Runtime roll-forward policies (see [Control roll-forward behavior](../../core/versions/selection.md#control-roll-forward-behavior)) determine which installed .NET runtime host executes an application executable. In contrast, library dependencies always run on whichever runtime the host application executes.
+
+> [!NOTE]
+> While older-target binaries are binary-compatible on newer runtimes, keep the following considerations in mind:
+> - **Behavioral compatibility**: Although .NET maintains high backward compatibility across releases, review the [.NET breaking changes](../../core/compatibility/index.md) documentation if you observe unexpected runtime behavior.
+> - **Platform-specific APIs**: If an older library uses platform-specific APIs or native dependencies, those dependencies must still be supported on the target operating system and architecture.
+
 ## Older targets
 
 .NET supports targeting versions of .NET Framework that are out of support as well as platforms that are no longer in common use. While there's value in making your library work on as many targets as possible, having to work around missing APIs can add significant overhead. Considering their reach and limitations, certain frameworks are no longer worth targeting.
