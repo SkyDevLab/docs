@@ -151,6 +151,28 @@ let pair = (1, 2)
 let triples = [ (1, 2, 3); (11, 12, 13) ]
 ```
 
+When a tuple expression splits across multiple lines, give each element its own line and indent the elements. Placing the opening and closing parentheses on separate lines improves readability, makes reordering or adding elements easier, and reduces diff noise when modifying elements:
+
+```fsharp
+// ✔️ OK
+let coordinates =
+    (
+        firstVeryLongCoordinateValue,
+        secondVeryLongCoordinateValue,
+        thirdVeryLongCoordinateValue
+    )
+
+// ✔️ OK
+let expected =
+    (
+        "primary",
+        [
+            itemOne
+            itemTwo
+        ]
+    )
+```
+
 It's commonly accepted to omit parentheses in pattern matching of tuples:
 
 ```fsharp
