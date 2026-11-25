@@ -46,6 +46,65 @@ Changes to note are:
 
 - Replacement of *packages.config* and *\*.csproj* with a new [.NET *\*.csproj*](https://github.com/dotnet/samples/tree/main/framework/libraries/migrate-library-csproj/src/Car/Car.csproj). NuGet packages are specified with `<PackageReference> ItemGroup`.
 
+### Vary source code across target frameworks
+
+When multi-targeting in a single project file with `<TargetFrameworks>`, your source code is compiled separately for each target framework. To handle APIs that differ between frameworks (such as APIs available in .NET Framework or modern .NET but not in .NET Standard), use preprocessor directives and SDK-defined conditional compilation symbols.
+
+The .NET SDK automatically defines symbols matching each target framework (such as `NETFRAMEWORK`, `NETSTANDARD`, `NET`, `NET8_0`, `NET8_0_OR_GREATER`, and `NET48`):
+
+# [C#](#tab/csharp)
+
+```csharp
+namespace MyLibrary
+{
+    public static class PlatformHelper
+    {
+        public static string GetPlatformInfo()
+        {
+#if NET8_0_OR_GREATER
+            return $"Modern .NET: {System.Environment.Version}";
+#elif NETFRAMEWORK
+            return $"Running on .NET Framework: {System.AppDomain.CurrentDomain.FriendlyName}";
+#else
+            return "Running on .NET Standard fallback";
+#endif
+        }
+    }
+}
+```
+
+# [Visual Basic](#tab/vb)
+
+```vb
+Public Class PlatformHelper
+    Public Shared Function GetPlatformInfo() As String
+#If NET8_0_OR_GREATER Then
+        Return $"Modern .NET: {System.Environment.Version}"
+#ElseIf NETFRAMEWORK Then
+        Return $"Running on .NET Framework: {System.AppDomain.CurrentDomain.FriendlyName}"
+#Else
+        Return "Running on .NET Standard fallback"
+#End If
+    End Function
+End Class
+```
+
+---
+
+You can also conditionally reference packages or project items per target framework in your project file using MSBuild conditions:
+
+```xml
+<ItemGroup Condition="'$(TargetFramework)' == 'net48'">
+  <Reference Include="System.Web" />
+</ItemGroup>
+
+<ItemGroup Condition="'$(TargetFramework)' != 'net48'">
+  <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
+</ItemGroup>
+```
+
+For more guidance and examples of multi-targeting, see [Cross-platform targeting - Multi-targeting](../../standard/library-guidance/cross-platform-targeting.md#multi-targeting) and [How to use preprocessor directives](../../csharp/language-reference/preprocessor-directives.md).
+
 ## Keep existing projects and create a .NET project
 
 If there are existing projects that target older frameworks, you may want to leave these projects untouched and use a .NET project to target future frameworks.
