@@ -24,13 +24,21 @@ There is only one thread pool per process.
 
 ### Exceptions in thread pool threads
 
-Unhandled exceptions in thread pool threads terminate the process. There are three exceptions to this rule:
+Unhandled exceptions on thread pool threads terminate the process. This applies to work items queued directly via <xref:System.Threading.ThreadPool.QueueUserWorkItem%2A?displayProperty=nameWithType> or unhandled exceptions in `async void` methods.
+
+There are three CLR-level exceptions to this process-termination rule:
 
 - A <xref:System.Threading.ThreadAbortException?displayProperty=nameWithType> is thrown in a thread pool thread because <xref:System.Threading.Thread.Abort*?displayProperty=nameWithType> was called. This only applies to .NET Framework. In .NET 5 and later versions, <xref:System.Threading.Thread.Abort*?displayProperty=nameWithType> throws a <xref:System.PlatformNotSupportedException>. For more information, see [SYSLIB0006: Thread.Abort is not supported](../../fundamentals/syslib-diagnostics/syslib0006.md).
 - A <xref:System.AppDomainUnloadedException?displayProperty=nameWithType> is thrown in a thread pool thread because the application domain is being unloaded.
 - The common language runtime or a host process terminates the thread.
 
-For more information, see [Exceptions in Managed Threads](exceptions-in-managed-threads.md).
+#### Task-based exception handling
+
+When using the Task Parallel Library (TPL), such as <xref:System.Threading.Tasks.Task.Run%2A?displayProperty=nameWithType> or `async Task` methods, unhandled exceptions from the executing delegate do not terminate the process immediately. Instead, the task infrastructure catches the unhandled exception, transitions the task into the <xref:System.Threading.Tasks.TaskStatus.Faulted?displayProperty=nameWithType> state, and wraps the exception in an <xref:System.AggregateException> stored on the task's <xref:System.Threading.Tasks.Task.Exception%2A?displayProperty=nameWithType> property. The exception is observed when awaiting the task, calling <xref:System.Threading.Tasks.Task.Wait%2A>, or accessing <xref:System.Threading.Tasks.Task%601.Result>.
+
+In contrast, methods declared as `async void` do not return a <xref:System.Threading.Tasks.Task> object to capture exceptions. Any unhandled exception in an `async void` method is rethrown directly onto the active <xref:System.Threading.SynchronizationContext> or the thread pool worker thread, which terminates the process.
+
+For more information, see [Exceptions in Managed Threads](exceptions-in-managed-threads.md) and [Exception handling (Task Parallel Library)](../parallel-programming/exception-handling-task-parallel-library.md).
 
 ### Maximum number of thread pool threads
 
