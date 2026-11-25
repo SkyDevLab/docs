@@ -15,7 +15,7 @@ Learn about strong naming and its advantages and disadvantages. Strong naming a 
 
 ## [NuGet and open-source libraries](./nuget.md)
 
-The best way to create NuGet packages for open-source .NET libraries, including recommended metadata for all packages published publicly on NuGet.org.
+The best way to create NuGet packages for open-source .NET libraries, including recommended metadata, XML documentation comments for IntelliSense, and symbol packages for debugging.
 
 ### [Dependencies](./dependencies.md)
 
