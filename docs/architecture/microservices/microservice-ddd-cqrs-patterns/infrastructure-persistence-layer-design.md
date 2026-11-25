@@ -27,7 +27,7 @@ Basically, a repository allows you to populate data in memory that comes from th
 
 As noted earlier, if you're using the CQS/CQRS architectural pattern, the initial queries are performed by side queries out of the domain model, performed by simple SQL statements using Dapper. This approach is much more flexible than repositories because you can query and join any tables you need, and these queries aren't restricted by rules from the aggregates. That data goes to the presentation layer or client app.
 
-If the user makes changes, the data to be updated comes from the client app or presentation layer to the application layer (such as a Web API service). When you receive a command in a command handler, you use repositories to get the data you want to update from the database. You update it in memory with the data passed with the commands, and you then add or update the data (domain entities) in the database through a transaction.
+If the user makes changes, the data to be updated comes from the client app or presentation layer to the application layer (such as a Web API service). When you receive a command in a command handler, you use repositories (or your persistence context directly) to get the data you want to update from the database. You update it in memory with the data passed with the commands, and you then add or update the data (domain entities) in the database through a transaction.
 
 It's important to emphasize again that you should only define one repository for each aggregate root, as shown in Figure 7-17. To achieve the goal of the aggregate root to maintain transactional consistency between all the objects within the aggregate, you should never create a repository for each table in the database.
 
@@ -100,15 +100,28 @@ In many cases, this pattern or way of applying operations against the storage ca
 
 The Unit of Work pattern can be implemented with or without using the Repository pattern.
 
-### Repositories shouldn't be mandatory
+### Custom repository abstractions are optional
 
-Custom repositories are useful for the reasons cited earlier, and that is the approach for the ordering microservice in eShopOnContainers. However, it isn't an essential pattern to implement in a DDD design or even in general .NET development.
+Custom repositories are useful for the reasons cited earlier, and that is the approach demonstrated in the ordering microservice in eShopOnContainers. However, defining custom repository interfaces and implementations (such as `IOrderRepository` and `OrderRepository`) is an architectural choice, not a strict requirement for Domain-Driven Design (DDD) or general .NET development.
 
-For instance, Jimmy Bogard, when providing direct feedback for this guide, said the following:
+When you use an Object-Relational Mapper (ORM) such as Entity Framework Core, your <xref:Microsoft.EntityFrameworkCore.DbContext> already implements the Unit of Work pattern, and each <xref:Microsoft.EntityFrameworkCore.DbSet%601> functions as a repository. Deciding whether to place a custom repository layer over EF Core involves trade-offs:
 
-> This'll probably be my biggest feedback. I'm really not a fan of repositories, mainly because they hide the important details of the underlying persistence mechanism. It's why I go for MediatR for commands, too. I can use the full power of the persistence layer, and push all that domain behavior into my aggregate roots. I don't usually want to mock my repositories – I still need to have that integration test with the real thing. Going CQRS meant that we didn't really have a need for repositories any more.
+- **Using custom repositories**:
+  - Encapsulates EF Core within infrastructure, shielding application command handlers and domain logic from data access details.
+  - Simplifies adding cross-cutting concerns (such as caching decorators or audit logging) around entity retrieval.
+  - Allows unit tests to mock repository interfaces without depending on EF Core in test assemblies.
 
-Repositories might be useful, but they are not critical for your DDD design in the way that the Aggregate pattern and a rich domain model are. Therefore, use the Repository pattern or not, as you see fit.
+- **Using `DbContext` directly in application handlers**:
+  - Eliminates boilerplate forwarding interfaces and methods that merely pass calls through to `DbSet<T>`.
+  - Avoids leaky repository abstractions when handling complex queries, projections, paging, or navigation property inclusion (`Include`/`ThenInclude`).
+  - Provides full access to advanced ORM capabilities (such as compiled queries, batch operations, and execution strategies).
+  - Encourages verifying persistence through integration tests against a real database (or test containers) rather than unit tests with mocked repositories.
+
+For instance, Jimmy Bogard, when providing direct feedback for this guide, noted:
+
+> I'm really not a fan of repositories, mainly because they hide the important details of the underlying persistence mechanism. It's why I go for MediatR for commands, too. I can use the full power of the persistence layer, and push all that domain behavior into my aggregate roots. I don't usually want to mock my repositories – I still need to have that integration test with the real thing. Going CQRS meant that we didn't really have a need for repositories any more.
+
+Ultimately, domain invariants and business rules belong inside your **Aggregate Roots** and entity classes, not in the data access layer. Whether you wrap EF Core with custom repository interfaces or inject `DbContext` directly into your application command handlers, your domain model remains isolated from database persistence concerns. Choose the approach that best balances abstraction with simplicity for your team.
 
 ## Additional resources
 
